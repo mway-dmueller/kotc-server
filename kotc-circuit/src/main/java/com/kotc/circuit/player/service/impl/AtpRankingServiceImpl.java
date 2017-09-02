@@ -26,7 +26,7 @@ public class AtpRankingServiceImpl implements AtpRankingService {
 	@Override
 	public AtpRankDate createRankDate(final Date date) {
 		final AtpRankDate rankDate = new AtpRankDate();
-		rankDate.setDate(date);
+		rankDate.setId(date);
 
 		return repository.save(rankDate);
 	}
@@ -41,7 +41,7 @@ public class AtpRankingServiceImpl implements AtpRankingService {
 	public List<Date> getRankDates() {
 		final Iterable<AtpRankDate> rankDates = repository.findAll();
 
-		return Streams.stream(rankDates).map((rankDate) -> rankDate.getDate()).collect(Collectors.toList());
+		return Streams.stream(rankDates).map((rankDate) -> rankDate.getId()).collect(Collectors.toList());
 	}
 
 	@Override

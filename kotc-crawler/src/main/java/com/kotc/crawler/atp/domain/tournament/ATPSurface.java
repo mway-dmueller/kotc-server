@@ -1,16 +1,16 @@
 package com.kotc.crawler.atp.domain.tournament;
 
-public enum ATPCourt {
+public enum ATPSurface {
 	HARD("Hard"), CLAY("Clay"), GRASS("Grass"), CARPET("Carpet"), UNKNOWN("");
 
 	private final String value;
 
-	private ATPCourt(final String value) {
+	private ATPSurface(final String value) {
 		this.value = value;
 	}
 
-	public static ATPCourt fromValue(final String value) {
-		for (final ATPCourt court : values()) {
+	public static ATPSurface fromValue(final String value) {
+		for (final ATPSurface court : values()) {
 			if (court.getValue().equalsIgnoreCase(value)) {
 				return court;
 			}

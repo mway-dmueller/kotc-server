@@ -37,7 +37,7 @@ import com.kotc.crawler.atp.domain.match.ATPMatchPlayer;
 import com.kotc.crawler.atp.domain.match.ATPMatchStatistics;
 import com.kotc.crawler.atp.domain.match.ATPResult;
 import com.kotc.crawler.atp.domain.match.ATPSet;
-import com.kotc.crawler.atp.domain.tournament.ATPCourt;
+import com.kotc.crawler.atp.domain.tournament.ATPSurface;
 import com.kotc.crawler.atp.domain.tournament.ATPTotalFinancialCommitment;
 import com.kotc.crawler.atp.domain.tournament.ATPTournament;
 import com.kotc.crawler.atp.domain.tournament.ATPTournamentEvent;
@@ -283,11 +283,11 @@ public class ATPTournamentsCrawler {
 		final Element tourneyDetailsTableRow = tourneyDetailsTableBody.child(0);
 		assert Tags.TR.equalsIgnoreCase(tourneyDetailsTableRow.tagName());
 
-		tournamentEvent.setCourt(getCourt(tourneyDetailsTableRow));
+		tournamentEvent.setSurface(getSurface(tourneyDetailsTableRow));
 		tournamentEvent.setTotalFinancialCommitment(getTotalFinancialCommitment(tourneyDetailsTableRow));
 	}
 
-	private ATPCourt getCourt(final Element tourneyDetailsTableRow) {
+	private ATPSurface getSurface(final Element tourneyDetailsTableRow) {
 		final Element courtDetails = tourneyDetailsTableRow.child(1);
 		assert Tags.TD.equalsIgnoreCase(courtDetails.tagName());
 		assert "tourney-details".equals(courtDetails.className());
@@ -305,7 +305,7 @@ public class ATPTournamentsCrawler {
 		assert "item-value".equals(courtItemValue.className());
 		assert courtItemValue.hasText();
 
-		return ATPCourt.fromValue(courtItemValue.text());
+		return ATPSurface.fromValue(courtItemValue.text());
 	}
 
 	private ATPTotalFinancialCommitment getTotalFinancialCommitment(final Element tourneyDetailsTableRow) {

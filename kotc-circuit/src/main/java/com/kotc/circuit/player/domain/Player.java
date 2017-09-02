@@ -1,6 +1,7 @@
 package com.kotc.circuit.player.domain;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyTemporal;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -63,10 +65,11 @@ public class Player extends BasicEntity {
 	@CollectionTable(name = "player_atp_ranking", joinColumns = {
 			@JoinColumn(name = FK_PLAYER_ID, referencedColumnName = BasicEntity.PROPERTY_ID, nullable = false,
 					updatable = false) })
-	@MapKeyTemporal(TemporalType.TIMESTAMP)
-	@MapKeyColumn(name = "date", nullable = false, updatable = false)
+	@MapKeyTemporal(TemporalType.DATE)
+	@MapKeyColumn(name = "rank_date_id", nullable = false, updatable = false)
 	@Column(name = "rank", nullable = false, updatable = false)
-	private Map<Date, Integer> atpRankings;
+	@OrderBy("rank_date_id")
+	private Map<Date, Integer> atpRankings = new LinkedHashMap<>();
 
 	@ManyToMany(targetEntity = Match.class)
 	@JoinTable(name = "match_player", joinColumns = @JoinColumn(name = "player_id", referencedColumnName = "id"),

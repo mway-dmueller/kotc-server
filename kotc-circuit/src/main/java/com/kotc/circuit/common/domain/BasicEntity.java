@@ -14,7 +14,7 @@ public abstract class BasicEntity implements Serializable {
 
 	public static final String PROPERTY_ID = "id";
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	@Column(name = "id", nullable = false, updatable = false)
 	protected Long id;

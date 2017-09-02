@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.kotc.circuit.common.domain.BasicEntity;
-import com.kotc.circuit.common.domain.Court;
+import com.kotc.circuit.common.domain.Surface;
 import com.kotc.circuit.common.domain.Surrounding;
 import com.kotc.circuit.match.domain.Match;
 
@@ -56,9 +56,9 @@ public class TournamentEvent extends BasicEntity {
 	private TournamentType type;
 
 	@NotNull
-	@Column(name = "court", nullable = false, updatable = false)
+	@Column(name = "surface", nullable = false, updatable = false)
 	@Enumerated(EnumType.STRING)
-	private Court court;
+	private Surface surface;
 
 	@Column(name = "surrounding")
 	@Enumerated(EnumType.STRING)
@@ -107,12 +107,12 @@ public class TournamentEvent extends BasicEntity {
 		this.type = type;
 	}
 
-	public Court getCourt() {
-		return court;
+	public Surface getSurface() {
+		return surface;
 	}
 
-	public void setCourt(final Court court) {
-		this.court = court;
+	public void setSurface(final Surface surface) {
+		this.surface = surface;
 	}
 
 	public Surrounding getSurrounding() {

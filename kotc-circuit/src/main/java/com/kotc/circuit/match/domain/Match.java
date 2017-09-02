@@ -19,8 +19,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.kotc.circuit.common.domain.BasicEntity;
-import com.kotc.circuit.common.domain.Court;
 import com.kotc.circuit.common.domain.Mode;
+import com.kotc.circuit.common.domain.Surface;
 import com.kotc.circuit.player.domain.Player;
 import com.kotc.circuit.tournament.domain.TournamentEvent;
 
@@ -36,9 +36,9 @@ public class Match extends BasicEntity {
 	private static final String FK_MATCH_ID = "match_id";
 
 	@NotNull
-	@Column(name = "court", nullable = false, updatable = false)
+	@Column(name = "surface", nullable = false, updatable = false)
 	@Enumerated(EnumType.STRING)
-	private Court court;
+	private Surface surface;
 
 	@NotNull
 	@Column(name = "mode", nullable = false, updatable = false)
@@ -77,12 +77,12 @@ public class Match extends BasicEntity {
 	@ManyToMany(targetEntity = Player.class, mappedBy = Player.PROPERTY_MATCHES)
 	private List<Player> players;
 
-	public Court getCourt() {
-		return court;
+	public Surface getSurface() {
+		return surface;
 	}
 
-	public void setCourt(final Court court) {
-		this.court = court;
+	public void setSurface(final Surface surface) {
+		this.surface = surface;
 	}
 
 	public Mode getMode() {

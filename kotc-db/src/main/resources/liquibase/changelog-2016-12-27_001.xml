@@ -25,6 +25,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		
+		<addAutoIncrement tableName="tournament" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"/>
 	</changeSet>
 
 	<changeSet author="d.mueller" id="161227-002">
@@ -38,20 +40,22 @@
 			<column name="tournament_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
-			<column name="from_date" type="timestamp">
+			<column name="from_date" type="date">
 				<constraints nullable="false" />
 			</column>
-			<column name="to_date" type="timestamp">
+			<column name="to_date" type="date">
 				<constraints nullable="false" />
 			</column>
 			<column name="type" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="court" type="varchar(255)">
+			<column name="surface" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
 			<column name="surrounding" type="varchar(255)" />
 		</createTable>
+		
+		<addAutoIncrement tableName="tournament_event" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"/>
 	</changeSet>
 
 	<changeSet author="d.mueller" id="161227-003">
@@ -76,36 +80,37 @@
 			<column name="gender" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="birth_date" type="timestamp">
-				<constraints nullable="false" />
-			</column>
-			<column name="city" type="varchar(255)">
-				<constraints nullable="false" />
-			</column>
-			<column name="country" type="varchar(255)">
-				<constraints nullable="false" />
-			</column>
+			<column name="birth_date" type="date"/>
+			<column name="city" type="varchar(255)"/>
+			<column name="country" type="varchar(255)"/>
 			<column name="elo" type="int(32)" />
+		</createTable>
+		
+		<addAutoIncrement tableName="player" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"/>
+	</changeSet>
+	
+	<changeSet author="d.mueller" id="161227-005">
+		<createTable tableName="atp_rank_date">
+			<column name="id" type="date">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
 		</createTable>
 	</changeSet>
 
-	<changeSet author="d.mueller" id="161227-005">
+	<changeSet author="d.mueller" id="161227-006">
 		<createTable tableName="player_atp_ranking">
 			<column name="player_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
-			<column name="date" type="timestamp">
+			<column name="rank_date_id" type="date">
 				<constraints nullable="false" />
 			</column>
 			<column name="rank" type="int(32)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-	</changeSet>
-
-	<changeSet author="d.mueller" id="161227-006">
-		<addPrimaryKey tableName="player_atp_ranking"
-			columnNames="player_id, date" />
+		
+		<addPrimaryKey tableName="player_atp_ranking" columnNames="player_id, rank_date_id" />
 	</changeSet>
 
 	<changeSet author="d.mueller" id="161227-007">
@@ -114,13 +119,21 @@
 			referencedTableName="player" referencedColumnNames="id" deferrable="false"
 			initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" />
 	</changeSet>
-
+	
 	<changeSet author="d.mueller" id="161227-008">
+		<addForeignKeyConstraint constraintName="fk_player_atp_ranking_rank_date_id" 
+			baseTableName="player_atp_ranking" baseColumnNames="rank_date_id" 
+			referencedTableName="atp_rank_date" referencedColumnNames="id"
+			deferrable="false" initiallyDeferred="false"
+			onDelete="RESTRICT" onUpdate="RESTRICT"/>
+	</changeSet>
+
+	<changeSet author="d.mueller" id="161227-009">
 		<createTable tableName="match">
 			<column name="id" type="bigint">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="court" type="varchar(255)">
+			<column name="surface" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
 			<column name="mode" type="varchar(255)">
@@ -142,23 +155,25 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		
+		<addAutoIncrement tableName="match" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"/>
 	</changeSet>
 
-	<changeSet author="d.mueller" id="161227-009">
+	<changeSet author="d.mueller" id="161227-010">
 		<addForeignKeyConstraint constraintName="fk_match_winner_id"
 			baseTableName="match" baseColumnNames="winner_id"
 			referencedTableName="player" referencedColumnNames="id" deferrable="false"
 			initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" />
 	</changeSet>
 
-	<changeSet author="d.mueller" id="161227-010">
+	<changeSet author="d.mueller" id="161227-011">
 		<addForeignKeyConstraint constraintName="fk_match_loser_id"
 			baseTableName="match" baseColumnNames="loser_id" referencedTableName="player"
 			referencedColumnNames="id" deferrable="false" initiallyDeferred="false"
 			onDelete="RESTRICT" onUpdate="RESTRICT" />
 	</changeSet>
 
-	<changeSet author="d.mueller" id="161227-011">
+	<changeSet author="d.mueller" id="161227-012">
 		<addForeignKeyConstraint constraintName="fk_match_tournament_event_id"
 			baseTableName="match" baseColumnNames="tournament_event_id"
 			referencedTableName="tournament_event" referencedColumnNames="id"
@@ -166,7 +181,7 @@
 			onUpdate="RESTRICT" />
 	</changeSet>
 
-	<changeSet author="d.mueller" id="161227-012">
+	<changeSet author="d.mueller" id="161227-013">
 		<createTable tableName="match_player">
 			<column name="match_id" type="bigint">
 				<constraints nullable="false" />
@@ -175,9 +190,7 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-	</changeSet>
-
-	<changeSet author="d.mueller" id="161227-013">
+		
 		<addPrimaryKey tableName="match_player" columnNames="match_id, player_id" />
 	</changeSet>
 

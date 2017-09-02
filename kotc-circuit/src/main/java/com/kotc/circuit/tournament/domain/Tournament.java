@@ -1,5 +1,6 @@
 package com.kotc.circuit.tournament.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,7 +36,7 @@ public class Tournament extends BasicEntity {
 	@NotNull
 	@Column(name = "circuit", nullable = false, updatable = false)
 	@Enumerated(EnumType.STRING)
-	private Circuit circuit;
+	private Circuit circuit = Circuit.ATP;
 
 	@NotNull
 	@Embedded
@@ -43,7 +44,7 @@ public class Tournament extends BasicEntity {
 
 	@OneToMany(targetEntity = TournamentEvent.class, mappedBy = BasicEntity.PROPERTY_ID,
 			orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<TournamentEvent> tournamentEvents;
+	private List<TournamentEvent> tournamentEvents = new ArrayList<>();
 
 	public String getAtpCode() {
 		return atpCode;

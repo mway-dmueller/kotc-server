@@ -1,6 +1,7 @@
 package com.kotc.crawler.atp.domain.tournament;
 
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.kotc.crawler.atp.domain.match.ATPMatch;
@@ -11,9 +12,9 @@ public class ATPTournamentEvent {
 	private int year;
 	private Date fromDate;
 	private Date toDate;
-	private ATPCourt court;
+	private ATPSurface surface;
 	private ATPTotalFinancialCommitment totalFinancialCommitment;
-	private Set<ATPMatch> matches;
+	private Set<ATPMatch> matches = new LinkedHashSet<>();
 
 	public ATPTournament getTournament() {
 		return tournament;
@@ -47,12 +48,12 @@ public class ATPTournamentEvent {
 		this.toDate = toDate;
 	}
 
-	public ATPCourt getCourt() {
-		return court;
+	public ATPSurface getSurface() {
+		return surface;
 	}
 
-	public void setCourt(final ATPCourt court) {
-		this.court = court;
+	public void setSurface(final ATPSurface surface) {
+		this.surface = surface;
 	}
 
 	public ATPTotalFinancialCommitment getTotalFinancialCommitment() {
@@ -75,7 +76,7 @@ public class ATPTournamentEvent {
 	public String toString() {
 		return new StringBuilder().append("ATPTournamentEvent [\n\t").append("tournament=").append(tournament)
 				.append(",\n\tyear=").append(year).append(",\n\tfromDate=").append(fromDate).append(",\n\ttoDate=")
-				.append(toDate).append(",\n\tcourt=").append(court).append(",\n\ttotalFinancialCommitment=")
+				.append(toDate).append(",\n\tsurface=").append(surface).append(",\n\ttotalFinancialCommitment=")
 				.append(totalFinancialCommitment).append(",\n\tmatches=").append(matches).append("]").toString();
 	}
 }
