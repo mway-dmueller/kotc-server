@@ -74,7 +74,7 @@ public class KotcRepository<T> extends SimpleJpaRepository<T, Long> {
 		resultList = tq.getResultList();
 
 		long total;
-		if (resultList == null
+		if (resultList == null || pageable == null
 				|| pageable.getPageSize() > 0 && pageable.getPageSize() <= resultList.size()) {
 			// use count query at SQL level
 			final CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
