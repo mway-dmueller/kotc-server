@@ -2,7 +2,7 @@ package com.kotc.circuit.player.domain;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,13 +74,13 @@ public class Player extends BasicEntity {
 	@ManyToMany(targetEntity = Match.class)
 	@JoinTable(name = "match_player", joinColumns = @JoinColumn(name = "player_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "match_id", referencedColumnName = "id"))
-	private List<Match> matches;
+	private Set<Match> matches = new LinkedHashSet<>();
 
 	@OneToMany(targetEntity = Match.class, mappedBy = Match.PROPERTY_WINNER)
-	private Set<Match> wonMatches;
+	private Set<Match> wonMatches = new LinkedHashSet<>();
 
 	@OneToMany(targetEntity = Match.class, mappedBy = Match.PROPERTY_LOSER)
-	private Set<Match> lostMatches;
+	private Set<Match> lostMatches = new LinkedHashSet<>();
 
 	public String getAtpCode() {
 		return atpCode;
@@ -138,11 +138,11 @@ public class Player extends BasicEntity {
 		this.atpRankings = atpRankings;
 	}
 
-	public List<Match> getMatches() {
+	public Set<Match> getMatches() {
 		return matches;
 	}
 
-	public void setMatches(final List<Match> matches) {
+	public void setMatches(final Set<Match> matches) {
 		this.matches = matches;
 	}
 
